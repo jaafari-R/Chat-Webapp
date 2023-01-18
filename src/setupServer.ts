@@ -8,7 +8,7 @@ import HTTP_STATUS from 'http-status-codes';
 import compression from 'compression';
 import 'express-async-errors';
 
-const SERVER_PORT = 16473;
+const SERVER_PORT = 14704;
 
 export class ChatServer 
 {
