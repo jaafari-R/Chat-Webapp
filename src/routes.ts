@@ -1,4 +1,4 @@
-import { Application } from "express";
+import { Application } from 'express';
 
 export default (app: Application) => 
 {
@@ -6,4 +6,4 @@ export default (app: Application) =>
 
     };
     routes();
-}
+};

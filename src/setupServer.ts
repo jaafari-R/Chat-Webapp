@@ -12,7 +12,7 @@ import { createAdapter } from '@socket.io/redis-adapter';
 import Logger from 'bunyan';
 
 import 'express-async-errors';
-import { config } from "./config";
+import { config } from './config';
 import applicationRoutes from './routes';
 import { CustomError, IErrorResponse } from './shared/globals/helpers/error-handler';
 
@@ -47,7 +47,7 @@ export class ChatServer
                 name: 'session',
                 keys: [`${config.SECRET_KEY_ONE}`, `${config.SECRET_KEY_TWO}`],
                 maxAge: 24 * 7 * 3600 * 1000,
-                secure: config.NODE_ENV !== "development"
+                secure: config.NODE_ENV !== 'development'
             })
         );
         app.use(hpp());
@@ -66,8 +66,8 @@ export class ChatServer
     private standardMiddleware(app: Application): void 
     {
         app.use(compression());
-        app.use(json({ limit: '50mb' }))
-        app.use(urlencoded({ extended: true, limit: '50mb' }))
+        app.use(json({ limit: '50mb' }));
+        app.use(urlencoded({ extended: true, limit: '50mb' }));
     }
 
 
@@ -80,7 +80,7 @@ export class ChatServer
     private globalErrorHandler(app: Application): void 
     {
         app.all('*', (req: Request, res: Response) => {
-            res.status(HTTP_STATUS.NOT_FOUND).json({ message: `${req.originalUrl} not found`})
+            res.status(HTTP_STATUS.NOT_FOUND).json({ message: `${req.originalUrl} not found`});
         });
 
         app.use((error: IErrorResponse, req: Request, res: Response, next: NextFunction) => {
@@ -130,7 +130,7 @@ export class ChatServer
         log.info(`Server has started with process ${process.pid}`);
         httpServer.listen(SERVER_PORT, () => {
             log.info(`Server running on port ${SERVER_PORT}`);
-            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+            ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'];
         });
     }
 
