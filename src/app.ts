@@ -1,11 +1,11 @@
 import express, { Express } from 'express';
-import { ChatServer } from './setupServer';
-import databaseConnection from './setupDatabase';
-import { config } from './config';
+import { ChatServer } from '@root/setupServer';
+import databaseConnection from '@root/setupDatabase';
+import { config } from '@root/config';
 
-class Application 
+class Application
 {
-    public initialize(): void 
+    public initialize(): void
     {
         this.loadConfig();
         databaseConnection();

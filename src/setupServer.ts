@@ -12,14 +12,14 @@ import { createAdapter } from '@socket.io/redis-adapter';
 import Logger from 'bunyan';
 
 import 'express-async-errors';
-import { config } from './config';
-import applicationRoutes from './routes';
-import { CustomError, IErrorResponse } from './shared/globals/helpers/error-handler';
+import { config } from '@root/config';
+import applicationRoutes from '@root/routes';
+import { CustomError, IErrorResponse } from '@global/helpers/error-handler';
 
 const SERVER_PORT = 14704;
 const log: Logger = config.createLogger('Server');
 
-export class ChatServer 
+export class ChatServer
 {
     private app: Application;
 
@@ -30,7 +30,7 @@ export class ChatServer
     }
 
 
-    public start(): void 
+    public start(): void
     {
         this.securityMiddleware(this.app);
         this.standardMiddleware(this.app);
@@ -40,7 +40,7 @@ export class ChatServer
     }
 
 
-    private securityMiddleware(app: Application): void 
+    private securityMiddleware(app: Application): void
     {
         app.use(
             cookierSession({
@@ -63,7 +63,7 @@ export class ChatServer
     }
 
 
-    private standardMiddleware(app: Application): void 
+    private standardMiddleware(app: Application): void
     {
         app.use(compression());
         app.use(json({ limit: '50mb' }));
@@ -71,13 +71,13 @@ export class ChatServer
     }
 
 
-    private routeMiddleware(app: Application): void 
+    private routeMiddleware(app: Application): void
     {
         applicationRoutes(app);
     }
 
 
-    private globalErrorHandler(app: Application): void 
+    private globalErrorHandler(app: Application): void
     {
         app.all('*', (req: Request, res: Response) => {
             res.status(HTTP_STATUS.NOT_FOUND).json({ message: `${req.originalUrl} not found`});
@@ -93,7 +93,7 @@ export class ChatServer
     }
 
 
-    private async startServer(app: Application): Promise<void> 
+    private async startServer(app: Application): Promise<void>
     {
         try
         {
