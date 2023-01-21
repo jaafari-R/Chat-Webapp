@@ -4,7 +4,7 @@ export default () =>
 {
     const connect = () => 
     {
-        mongoose.connect("mongodb://localhost:27017/chattyapp-backent")
+        mongoose.connect("mongodb://localhost:27017/chatapp-backend")
             .then(() => {
                 console.log("Successfully connected to database.");
             })
@@ -15,5 +15,5 @@ export default () =>
     };
     connect();
 
-    mongoose.connection.on("disconnect", connect);
+    mongoose.connection.on("disconnected", connect);
 }
