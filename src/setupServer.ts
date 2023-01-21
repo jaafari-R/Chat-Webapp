@@ -61,7 +61,7 @@ export class ChatServer
 
     private globalErrorHandler(app: Application): void {}
 
-    private startServer(app: Application): Promise<void> 
+    private async startServer(app: Application): Promise<void> 
     {
         try
         {
