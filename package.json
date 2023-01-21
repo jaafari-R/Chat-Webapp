@@ -1,29 +1,36 @@
 {
   "name": "full-stack-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chatty App,  Reference: https://www.eduonix.com/new_dashboard/node-with-react-build-amp-deploy-a-fullstack-web-application",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon -r tsconfig-paths/register src/app.ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaafari-R/Chat-Webapp.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaafari-R/Chat-Webapp/issues"
+  },
+  "homepage": "https://github.com/jaafari-R/Chat-Webapp#readme",
   "dependencies": {
     "@socket.io/redis-adapter": "^8.0.1",
+    "@types/node": "^18.11.18",
     "compression": "^1.7.4",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "helmet": "^6.0.1",
     "hpp": "^0.2.3",
-    "http": "^0.0.1-security",
     "http-status-codes": "^2.2.0",
     "mongoose": "^6.8.4",
     "redis": "^4.5.1",
     "socket.io": "^4.5.4",
-    "socket.io-redis": "^6.1.1",
     "typescript": "^4.9.4"
   },
   "devDependencies": {
@@ -32,7 +39,7 @@
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.15",
     "@types/hpp": "^0.2.2",
-    "@types/node": "^18.11.18",
+    "dotenv": "^16.0.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.2"
   }
