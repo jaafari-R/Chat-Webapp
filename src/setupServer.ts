@@ -79,7 +79,7 @@ export class ChatServer
     private startHttpServer(httpServer: http.Server): void
     {
         httpServer.listen(SERVER_PORT, () => {
-            console.log('Server running on port ${SERVER_PORT}');
+            console.log(`Server running on port ${SERVER_PORT}`);
         });
     }
 }
