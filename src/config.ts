@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import bunyan from 'bunyan';
 
 dotenv.config({});
 
@@ -13,6 +14,7 @@ class Config {
 
     private readonly DEFAULT_DATABASE_URL = "mongodb://localhost:27017/chatapp-backend"
 
+
     constructor() {
         this.DATABASE_URL = process.env.DATABASE_URL || this.DEFAULT_DATABASE_URL;
         this.JWT_TOKEN = process.env.JWT_TOKEN || "abcd";
@@ -23,6 +25,7 @@ class Config {
         this.REDIS_HOST = process.env.REDIS_HOST || "";
     }
 
+
     public validateConfig(): void {
         for(const [key, value] of Object.entries(this))
         {
@@ -31,6 +34,12 @@ class Config {
                 throw new Error(`Configuration ${key} not defined.`);
             }
         }
+    }
+
+
+    public createLogger(name: string): bunyan
+    {
+        return bunyan.createLogger({ name, level: "debug" });
     }
 };
 
