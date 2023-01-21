@@ -24,7 +24,11 @@ class Config {
     public validateConfig(): void {
         for(const [key, value] of Object.entries(this))
         {
-            throw new Error(`Configuration ${key} not defined.`)
+            console.log(value);
+            if(value === undefined)
+            {
+                throw new Error(`Configuration ${key} not defined.`);
+            }
         }
     }
 };

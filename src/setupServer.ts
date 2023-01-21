@@ -6,7 +6,13 @@ import hpp from 'hpp';
 import cookierSession from 'cookie-session';
 import HTTP_STATUS from 'http-status-codes';
 import compression from 'compression';
+import { Server } from 'socket.io'
+import { createClient } from 'redis';
+import { createAdapter } from 'socket.io-redis';
+
+
 import 'express-async-errors';
+import { config } from "./config";
 
 const SERVER_PORT = 14704;
 
@@ -33,16 +39,16 @@ export class ChatServer
         app.use(
             cookierSession({
                 name: 'session',
-                keys: ['test1', 'test2'],
+                keys: [`${config.SECRET_KEY_ONE}`, `${config.SECRET_KEY_TWO}`],
                 maxAge: 24 * 7 * 3600 * 1000,
-                secure: false
+                secure: config.NODE_ENV !== "development"
             })
         );
         app.use(hpp());
         app.use(helmet());
         app.use(
             cors({
-                origin: '*',
+                origin: config.CLIENT_URL,
                 credentials: true,
                 optionsSuccessStatus: 200,
                 methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
@@ -74,12 +80,21 @@ export class ChatServer
         }
     }
 
-    private createSocketIO(httpServer: http.Server): void {}
+    private createSocketIO(httpServer: http.Server): void 
+    {
+        const io: Server = new Server(httpServer, {
+            cors: {
+                origin: config.CLIENT_URL,
+
+            }
+        })
+    }
 
     private startHttpServer(httpServer: http.Server): void
     {
         httpServer.listen(SERVER_PORT, () => {
             console.log(`Server running on port ${SERVER_PORT}`);
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
         });
     }
 }
