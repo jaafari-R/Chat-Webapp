@@ -135,5 +135,8 @@ export class ChatServer
     }
 
 
-    private socketIOConnections(io: Server): void {}
+    private socketIOConnections(io: Server): void
+    {
+        log.info('this.socketIOConnections');
+    }
 }
