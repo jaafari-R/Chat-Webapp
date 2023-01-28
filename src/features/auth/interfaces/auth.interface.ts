@@ -33,7 +33,7 @@ export interface IAuthDocument extends Document
     hashPassword(password: string): Promise<string>;
 }
 
-export interface ISignUpDate
+export interface ISignUpData
 {
     _id: ObjectId;
     uId: string;
