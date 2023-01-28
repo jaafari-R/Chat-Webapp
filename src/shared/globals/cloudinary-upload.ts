@@ -1,5 +1,4 @@
 import cloudinary, { UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
-import { resolve } from 'path';
 
 export function upload (
     file: string,
