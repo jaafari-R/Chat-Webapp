@@ -11,7 +11,7 @@ const authSchema: Schema = new Schema(
         email: { type: String },
         password: { type: String },
         avatarColor: {type: String },
-        createdAt: { type: DataTransfer, default: Date.now }
+        createdAt: { type: Date, default: Date.now }
     },
     {
         toJSON: {

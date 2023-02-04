@@ -8,13 +8,14 @@ import { BadRequestError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
 import { UploadApiResponse, UploadStream } from 'cloudinary';
 import { upload } from '@global/cloudinary-upload';
+import HTTP_STATUS from 'http-status-codes';
 
 export class SignUp
 {
     @joiValidation(signupSchema)
     public async create(req: Request, res: Response): Promise<void>
     {
-        const { username, password, email, avatarColor, avatarImage} = req.body;
+        const { username, password, email, avatarColor, avatarImage } = req.body;
         const checkIfUserExists: IAuthDocument = await authService.getUserByUsernameOrEmail(username, email);
         if(checkIfUserExists) {
             if(checkIfUserExists.username == username)
@@ -36,8 +37,11 @@ export class SignUp
         });
         const result: UploadApiResponse = await upload(avatarImage, `${userObjectId}`, true, true) as UploadApiResponse;
         if(!result?.public_id) {
-            throw new BadRequestError('Error: Failed to upload avatarImage.');
+
+            throw new BadRequestError('Error: Failed to upload avatarImage.<br>' + result);
         }
+
+        res.status(HTTP_STATUS.CREATED).json({ message: 'User created successfully!', authData });
     }
 
     private signupData(data: ISignUpData): IAuthDocument
