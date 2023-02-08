@@ -3,10 +3,8 @@ import { ChatServer } from '@root/setupServer';
 import databaseConnection from '@root/setupDatabase';
 import { config } from '@root/config';
 
-class Application
-{
-    public initialize(): void
-    {
+class Application {
+    public initialize(): void {
         this.loadConfig();
         databaseConnection();
         const app: Express = express();
@@ -14,8 +12,7 @@ class Application
         server.start();
     }
 
-    private loadConfig(): void
-    {
+    private loadConfig(): void {
         config.validateConfig();
         config.cloudinaryConfig();
     }

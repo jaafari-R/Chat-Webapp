@@ -26,4 +26,4 @@ const signupSchema: ObjectSchema = Joi.object().keys({
     })
 });
 
-export {signupSchema};
+export { signupSchema };

@@ -1,8 +1,5 @@
-
-export class Helpers
-{
-    static firstLetterUppercase(str: string): string
-    {
+export class Helpers {
+    static firstLetterUppercase(str: string): string {
         const valueString = str.toLowerCase();
         return valueString
             .split(' ')
@@ -10,13 +7,11 @@ export class Helpers
             .join(' ');
     }
 
-    static lowerCase(str: string): string
-    {
+    static lowerCase(str: string): string {
         return str.toLowerCase();
     }
 
-    static generateRandomInt(intLength: number): number
-    {
+    static generateRandomInt(intLength: number): number {
         let result = 0;
         for (let i = 0; i < intLength; ++i) {
             result *= 10;

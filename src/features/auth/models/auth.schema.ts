@@ -10,7 +10,7 @@ const authSchema: Schema = new Schema(
         uId: { type: String },
         email: { type: String },
         password: { type: String },
-        avatarColor: {type: String },
+        avatarColor: { type: String },
         createdAt: { type: Date, default: Date.now }
     },
     {
@@ -34,7 +34,7 @@ authSchema.methods.comparePassword = async function (password: string): Promise<
     return compare(password, hashedPassword);
 };
 
-authSchema.methods.hashPassword = async function(password: string): Promise<string> {
+authSchema.methods.hashPassword = async function (password: string): Promise<string> {
     return hash(password, SALT_ROUND);
 };
 

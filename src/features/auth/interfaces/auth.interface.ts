@@ -1,8 +1,7 @@
 import { Document } from 'mongoose';
 import { ObjectId } from 'mongodb';
 
-declare global
-{
+declare global {
     namespace Express {
         interface Request {
             currentUser?: AuthPayLoad;
@@ -10,8 +9,7 @@ declare global
     }
 }
 
-export interface AuthPayLoad
-{
+export interface AuthPayLoad {
     UserId: string;
     uId: string;
     email: string;
@@ -20,8 +18,7 @@ export interface AuthPayLoad
     iat?: number;
 }
 
-export interface IAuthDocument extends Document
-{
+export interface IAuthDocument extends Document {
     _id: string | ObjectId;
     uId: string;
     username: string;
@@ -33,8 +30,7 @@ export interface IAuthDocument extends Document
     hashPassword(password: string): Promise<string>;
 }
 
-export interface ISignUpData
-{
+export interface ISignUpData {
     _id: ObjectId;
     uId: string;
     email: string;
@@ -43,7 +39,6 @@ export interface ISignUpData
     avatarColor: string;
 }
 
-export interface IAuthJob
-{
+export interface IAuthJob {
     value?: string | IAuthDocument;
 }
