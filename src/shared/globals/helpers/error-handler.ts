@@ -1,34 +1,27 @@
 import HTTP_STATUS from 'http-status-codes';
 
-export interface IErrorResponse 
-{
+export interface IErrorResponse {
     message: string;
     statusCode: number;
     status: string;
     serializeErrors(): IError;
 }
 
-
-export interface IError
-{
+export interface IError {
     message: string;
     statusCode: number;
     status: string;
 }
 
-
-export abstract class CustomError extends Error
-{
+export abstract class CustomError extends Error {
     abstract statusCode: number;
     abstract status: string;
 
-    constructor(message: string)
-    {
+    constructor(message: string) {
         super(message);
     }
 
-    serializeErrors(): IError
-    {
+    serializeErrors(): IError {
         return {
             message: this.message,
             status: this.status,
@@ -37,65 +30,47 @@ export abstract class CustomError extends Error
     }
 }
 
-
-export class JointRequestValidationError extends CustomError
-{
+export class JointRequestValidationError extends CustomError {
     statusCode = HTTP_STATUS.BAD_REQUEST;
     status = 'error';
 
-    constructor(message: string)
-    {
+    constructor(message: string) {
         super(message);
     }
 }
 
-
-
-export class BadRequestError extends CustomError
-{
+export class BadRequestError extends CustomError {
     statusCode = HTTP_STATUS.BAD_REQUEST;
     status = 'error';
 
-    constructor(message: string)
-    {
+    constructor(message: string) {
         super(message);
     }
 }
 
-
-export class NotAuthorizedError extends CustomError
-{
+export class NotAuthorizedError extends CustomError {
     statusCode = HTTP_STATUS.UNAUTHORIZED;
     status = 'error';
 
-    constructor(message: string)
-    {
+    constructor(message: string) {
         super(message);
     }
 }
 
-
-export class FileTooLargeError extends CustomError
-{
+export class FileTooLargeError extends CustomError {
     statusCode = HTTP_STATUS.REQUEST_TOO_LONG;
     status = 'error';
 
-    constructor(message: string)
-    {
+    constructor(message: string) {
         super(message);
     }
 }
 
-
-export class ServerError extends CustomError
-{
+export class ServerError extends CustomError {
     statusCode = HTTP_STATUS.SERVICE_UNAVAILABLE;
     status = 'error';
 
-    constructor(message: string)
-    {
+    constructor(message: string) {
         super(message);
     }
 }
-
-

@@ -18,7 +18,6 @@ class Config {
 
     private readonly DEFAULT_DATABASE_URL = 'mongodb://localhost:27017/chatapp-backend';
 
-
     constructor() {
         this.DATABASE_URL = process.env.DATABASE_URL || this.DEFAULT_DATABASE_URL;
         this.JWT_TOKEN = process.env.JWT_TOKEN || 'abcd';
@@ -32,32 +31,25 @@ class Config {
         this.CLOUD_API_SECRET = process.env.CLOUD_API_SECRET || '';
     }
 
-
     public validateConfig(): void {
-        for(const [key, value] of Object.entries(this))
-        {
-            if(value === undefined)
-            {
+        for (const [key, value] of Object.entries(this)) {
+            if (value === undefined) {
                 throw new Error(`Configuration ${key} not defined.`);
             }
         }
     }
 
-
-    public createLogger(name: string): bunyan
-    {
+    public createLogger(name: string): bunyan {
         return bunyan.createLogger({ name, level: 'debug' });
     }
 
-
-    public cloudinaryConfig(): void
-    {
+    public cloudinaryConfig(): void {
         cloudinary.v2.config({
             cloud_name: this.CLOUD_NAME,
             api_key: this.CLOUD_API_KEY,
             api_secret: this.CLOUD_API_SECRET
         });
     }
-};
+}
 
 export const config: Config = new Config();
