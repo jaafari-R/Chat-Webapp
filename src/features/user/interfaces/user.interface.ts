@@ -1,6 +1,5 @@
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document } from 'mongoose';
 import { ObjectId } from 'mongodb';
-import { string } from "joi";
 
 export interface IUserDocument extends Document
 {

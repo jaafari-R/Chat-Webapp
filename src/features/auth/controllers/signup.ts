@@ -6,7 +6,7 @@ import { IAuthDocument, ISignUpData } from '@auth/interfaces/auth.interface';
 import { authService } from '@service/db/auth.service';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
-import { UploadApiResponse, UploadStream } from 'cloudinary';
+import { UploadApiResponse } from 'cloudinary';
 import { upload } from '@global/cloudinary-upload';
 import HTTP_STATUS from 'http-status-codes';
 
