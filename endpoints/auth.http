@@ -8,7 +8,7 @@ Accept: application/json
 withCredentials: true
 
 {
-    "username": "Ramadan2",
+    "username": "Ramadan",
     "password": "12341234",
     "email": "jaafarir1amadan@gmail.com",
     "avatarColor": "green",
@@ -29,6 +29,13 @@ withCredentials: true
 
 ###
 GET {{baseURL}}/{{urlPath}}/signout
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+
+###
+GET {{baseURL}}/{{urlPath}}/currentuser
 Content-Type: application/json
 Accept: application/json
 withCredentials: true

@@ -11,7 +11,7 @@ declare global {
 }
 
 export interface AuthPayLoad {
-    UserId: string;
+    userId: string;
     uId: string;
     email: string;
     username: string;

@@ -75,7 +75,7 @@ export class UserCache extends BaseCache
             }
 
             await this.client.ZADD('user', { score: parseInt(userUId, 10), value: `${key}`});
-            await this.client.HSET(`users: ${key}`, dataToSave);
+            await this.client.HSET(`users:${key}`, dataToSave);
         }
         catch(error) {
             log.error(error);
@@ -91,6 +91,11 @@ export class UserCache extends BaseCache
             }
 
             const response: IUserDocument = await this.client.HGETALL(`users:${userId}`) as unknown as IUserDocument;
+
+            if(!response._id) { // key does not exist
+                return null;
+            }
+
             response.createdAt = new Date(Helpers.parseJson(`${response.createdAt}`));
             response.postsCount = Helpers.parseJson(`${response.postsCount}`);
             response.blocked = Helpers.parseJson(`${response.blocked}`);
