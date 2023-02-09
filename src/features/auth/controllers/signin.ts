@@ -11,15 +11,14 @@ import { IAuthDocument } from '@auth/interfaces/auth.interface';
 import { IUserDocument } from '@user/interfaces/user.interface';
 import { userService } from '@service/db/user.service';
 
-export class SignIn
-{
+export class SignIn {
     @joiValidation(signinSchema)
-    public async read(req: Request, res: Response): Promise<void>
-    {
+    public async read(req: Request, res: Response): Promise<void> {
         const { username, password } = req.body;
 
         const userAuth: IAuthDocument = await authService.getAuthUserByUsername(username);
-        if (!userAuth) { // if user does not exist
+        if (!userAuth) {
+            // if user does not exist
             throw new BadRequestError('Invalid credentials!');
         }
 
@@ -45,5 +44,4 @@ export class SignIn
         req.session = { jwt: userJwt };
         res.status(HTTP_STATUS.OK).json({ message: 'Successfully logged in!', user: user, token: userJwt });
     }
-
 }

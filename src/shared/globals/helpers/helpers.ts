@@ -20,12 +20,10 @@ export class Helpers {
         return result;
     }
 
-    static parseJson(prop: string): any
-    {
+    static parseJson(prop: string): any {
         try {
             JSON.parse(prop);
-        }
-        catch(error) {
+        } catch (error) {
             return prop;
         }
     }

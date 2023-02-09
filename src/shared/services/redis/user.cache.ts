@@ -2,97 +2,113 @@ import { ServerError } from '@global/helpers/error-handler';
 import { Helpers } from '@global/helpers/helpers';
 import { config } from '@root/config';
 import { BaseCache } from '@service/redis/base.cache';
-import { IUser, IUserDocument } from '@user/interfaces/user.interface';
+import { IUserDocument } from '@user/interfaces/user.interface';
 import Logger from 'bunyan';
 
 const log: Logger = config.createLogger('userCache');
 
-export class UserCache extends BaseCache
-{
-    constructor()
-    {
+export class UserCache extends BaseCache {
+    constructor() {
         super('userCache');
     }
 
-    public async saveUserToCache(key: string, userUId: string, createdUser: IUserDocument): Promise<void>
-    {
+    public async saveUserToCache(key: string, userUId: string, createdUser: IUserDocument): Promise<void> {
         const createdAt = new Date();
         const {
-             _id,
-             uId,
-             username,
-             email,
-             avatarColor,
-             blocked,
-             blockedBy,
-             postsCount,
-             profilePicture,
-             followersCount,
-             followingCount,
-             notifications,
-             work,
-             location,
-             school,
-             quote,
-             bgImageId,
-             bgimageVersion,
-             social
+            _id,
+            uId,
+            username,
+            email,
+            avatarColor,
+            blocked,
+            blockedBy,
+            postsCount,
+            profilePicture,
+            followersCount,
+            followingCount,
+            notifications,
+            work,
+            location,
+            school,
+            quote,
+            bgImageId,
+            bgimageVersion,
+            social
         } = createdUser;
 
         const firstList: string[] = [
-            '_id', `${_id}`,
-            'uId', `${uId}`,
-            'username', `${username}`,
-            'email', `${email}`,
-            'avatarColor', `${avatarColor}`,
-            'createdAt', `${createdAt}`,
-            'postsCount', `${postsCount}`,
+            '_id',
+            `${_id}`,
+            'uId',
+            `${uId}`,
+            'username',
+            `${username}`,
+            'email',
+            `${email}`,
+            'avatarColor',
+            `${avatarColor}`,
+            'createdAt',
+            `${createdAt}`,
+            'postsCount',
+            `${postsCount}`
         ];
 
         const secondList: string[] = [
-            'blocked', JSON.stringify(blocked),
-            'blockedBy', JSON.stringify(blockedBy),
-            'profilePicture', `${profilePicture}`,
-            'followersCount', `${followersCount}`,
-            'followingCount', `${followingCount}`,
-            'notifications', JSON.stringify(notifications),
-            'social', JSON.stringify(social)
+            'blocked',
+            JSON.stringify(blocked),
+            'blockedBy',
+            JSON.stringify(blockedBy),
+            'profilePicture',
+            `${profilePicture}`,
+            'followersCount',
+            `${followersCount}`,
+            'followingCount',
+            `${followingCount}`,
+            'notifications',
+            JSON.stringify(notifications),
+            'social',
+            JSON.stringify(social)
         ];
 
         const thirdList: string[] = [
-            'work', `${work}`,
-            'location', `${location}`,
-            'school', `${school}`,
-            'quote', `${quote}`,
-            'bgImageId', `${bgImageId}`,
-            'bgimageVersion', `${bgimageVersion}`
+            'work',
+            `${work}`,
+            'location',
+            `${location}`,
+            'school',
+            `${school}`,
+            'quote',
+            `${quote}`,
+            'bgImageId',
+            `${bgImageId}`,
+            'bgimageVersion',
+            `${bgimageVersion}`
         ];
         const dataToSave: string[] = [...firstList, ...secondList, ...thirdList];
 
         try {
-            if(!this.client.isOpen) {
+            if (!this.client.isOpen) {
                 await this.client.connect();
             }
 
-            await this.client.ZADD('user', { score: parseInt(userUId, 10), value: `${key}`});
+            await this.client.ZADD('user', { score: parseInt(userUId, 10), value: `${key}` });
             await this.client.HSET(`users:${key}`, dataToSave);
-        }
-        catch(error) {
+        } catch (error) {
             log.error(error);
             throw new ServerError('Failed to cache user in Redis');
         }
     }
 
-    public async getUserFromCache(userId: string): Promise<IUserDocument | null>
-    {
+    public async getUserFromCache(userId: string): Promise<IUserDocument | null> {
         try {
-            if(!this.client.isOpen) {
+            if (!this.client.isOpen) {
                 await this.client.connect();
             }
 
-            const response: IUserDocument = await this.client.HGETALL(`users:${userId}`) as unknown as IUserDocument;
+            const response: IUserDocument = (await this.client.HGETALL(`users:${userId}`)) as unknown as IUserDocument;
 
-            if(!response._id) { // key does not exist
+            if (!response._id) {
+                // key does not exist
                 return null;
             }
 
@@ -106,8 +122,7 @@ export class UserCache extends BaseCache
             response.followingCount = Helpers.parseJson(`${response.followingCount}`);
 
             return response;
-        }
-        catch(error) {
+        } catch (error) {
             log.error(error);
             throw new ServerError('Failed to cache user in Redis');
         }

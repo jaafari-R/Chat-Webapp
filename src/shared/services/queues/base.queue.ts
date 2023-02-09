@@ -6,20 +6,17 @@ import { ExpressAdapter } from '@bull-board/express';
 import { config } from '@root/config';
 import { IAuthJob } from '@auth/interfaces/auth.interface';
 
-type IBaseJobData =
-    IAuthJob;
+type IBaseJobData = IAuthJob;
 
 let bullAdapters: BullAdapter[] = [];
 
 export let serverAdapter: ExpressAdapter;
 
-export abstract class BaseQueue
-{
+export abstract class BaseQueue {
     queue: Queue.Queue;
     log: Logger;
 
-    constructor(queueName: string)
-    {
+    constructor(queueName: string) {
         this.queue = new Queue(queueName, `${config.REDIS_HOST}`);
         bullAdapters.push(new BullAdapter(this.queue));
         bullAdapters = [...new Set(bullAdapters)];
@@ -47,7 +44,7 @@ export abstract class BaseQueue
     }
 
     protected addJob(name: string, data: IBaseJobData): void {
-        this.queue.add(name, data, { attempts: 3, backoff: { type: 'fixed', delay: 5000 }});
+        this.queue.add(name, data, { attempts: 3, backoff: { type: 'fixed', delay: 5000 } });
     }
 
     protected processJob(name: string, concurrency: number, callback: Queue.ProcessCallbackFunction<void>): void {
