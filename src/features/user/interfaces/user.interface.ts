@@ -11,7 +11,7 @@ export interface IUserDocument extends Document {
     uId?: string;
     postsCount: number;
     work: string;
-    schoold: string;
+    school: string;
     quote: string;
     location: string;
     blocked: mongoose.Types.ObjectId[];

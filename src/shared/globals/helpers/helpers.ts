@@ -19,4 +19,12 @@ export class Helpers {
         }
         return result;
     }
+
+    static parseJson(prop: string): any {
+        try {
+            JSON.parse(prop);
+        } catch (error) {
+            return prop;
+        }
+    }
 }

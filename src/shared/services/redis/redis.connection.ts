@@ -17,3 +17,5 @@ class RedisConnection extends BaseCache {
         }
     }
 }
+
+export const redisConnection: RedisConnection = new RedisConnection();
