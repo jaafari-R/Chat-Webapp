@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import JWT from 'jsonwebtoken';
 import HTTP_STATUS from 'http-status-codes';
+import moment from 'moment';
+import publicIP from 'ip';
 
 import { joiValidation } from '@global/decorators/joi-validation.decorators';
 import { config } from '@root/config';
@@ -8,8 +10,11 @@ import { authService } from '@service/db/auth.service';
 import { BadRequestError } from '@global/helpers/error-handler';
 import { signinSchema } from '@auth/schemas/signin';
 import { IAuthDocument } from '@auth/interfaces/auth.interface';
-import { IUserDocument } from '@user/interfaces/user.interface';
+import { IResetPasswordParams, IUserDocument } from '@user/interfaces/user.interface';
 import { userService } from '@service/db/user.service';
+import { forgotPasswordTemplate } from '@service/emails/templates/forgot-password/forgot-password-template';
+import { emailQueue } from '@service/queues/email.queue';
+import { resetPasswordTemplate } from '@service/emails/reset-password/reset-password.template';
 
 export class SignIn {
     @joiValidation(signinSchema)
