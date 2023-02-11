@@ -38,6 +38,15 @@ class AuthService {
         const user: IAuthDocument = (await AuthModel.findOne(query).exec()) as IAuthDocument;
         return user;
     }
+
+    public async getAuthUserByPasswordToken(token: string): Promise<IAuthDocument> {
+        const query = {
+            passwordResetToken: token,
+            passwordResetExpires: { $gt: Date.now() }
+        };
+        const user: IAuthDocument = (await AuthModel.findOne(query).exec()) as IAuthDocument;
+        return user;
+    }
 }
 
 export const authService: AuthService = new AuthService();

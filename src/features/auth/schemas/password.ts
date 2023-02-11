@@ -15,7 +15,7 @@ const passwordSchema: ObjectSchema = Joi.object().keys({
         'string.max': 'Invalid password',
         'string.empty': 'Password is a required field'
     }),
-    confirmPassword: Joi.string().required().valid(Joi.ref('passsword')).messages({
+    confirmPassword: Joi.string().required().valid(Joi.ref('password')).messages({
         'any.only': 'Password should match',
         'any.required': 'Confirm password is a required field'
     })
